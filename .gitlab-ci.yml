@@ -1,15 +1,12 @@
-build-job:
+build:
   stage: build
-  build:
-    stage: docker
-    - echo "Job docker is running!"
-
-docker-job:
+    - echo "Hello World!!"
+    
+build:
   stage: docker
-  script:
     - echo "Job docker is running!"
 
-deploy-prod:
+deploy:
   stage: deploy
   script:
     - echo "This job deploys something!"
