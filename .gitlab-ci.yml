@@ -1,7 +1,7 @@
 stages:
   - build
   - docker
-  - deploy
+  - Kuber
 
 build:
   stage: build
@@ -13,8 +13,8 @@ docker:
   script:
     - echo "Docker is running!"
 
-Kuber:
-  stage: deploy
+Deploy:
+  stage: Kuber
   script:
     - echo "This job deploys something!"
    
