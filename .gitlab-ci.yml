@@ -10,6 +10,8 @@ build:
     
 docker:
   stage: docker
+  tags:
+    - 
   script:
     - echo "Docker is running!"
 
