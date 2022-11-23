@@ -2,7 +2,7 @@ stages:
   - build
   - docker
   - deploy
-build
+build:
   script:
     - echo "Hello world!"
 
