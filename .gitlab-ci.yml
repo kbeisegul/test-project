@@ -1,8 +1,4 @@
 build:
-  stage: build
-    - echo "Hello World!!"
-    
-build:
   stage: docker
     - echo "Job docker is running!"
 
