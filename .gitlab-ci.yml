@@ -13,7 +13,7 @@ docker:
   script:
     - echo "Docker is running!"
 
-deploy:
+Kuber:
   stage: deploy
   script:
     - echo "This job deploys something!"
