@@ -11,7 +11,7 @@ build:
 docker:
   stage: docker
   tags:
-    - 
+    - docker-runner
   script:
     - echo "Docker is running!"
 
