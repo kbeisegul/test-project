@@ -3,11 +3,6 @@ build:
   script:
     - echo "Hello world!"
 
-docker:
-  stage: docker
-  script:
-    - echo "Docker is running!"
-
 deploy
   stage: deploy
   script:
