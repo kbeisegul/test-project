@@ -1,5 +1,6 @@
 build:
   stage: docker
+  script:
     - echo "Job docker is running!"
 
 deploy:
