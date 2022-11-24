@@ -1,3 +1,5 @@
+image: maven:latest
+
 stages:
   - build
   - docker
@@ -6,7 +8,7 @@ stages:
 build:
   stage: build
   script:
-    - echo "Hello world!"
+  - mvn spring-boot:run
     
 docker:
   stage: docker
