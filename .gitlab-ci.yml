@@ -1,10 +1,25 @@
 image: maven:latest
 
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  APP_NAME: app-api
+  
 stages:
   - build
   - docker
   - Kuber
 
+Package artifacts:
+  stage: package
+  image: openjdk:17-alpine
+  only:
+    - release
+  script:
+    - mvn $MAVEN_OPTS clean package
+  artifacts:
+    paths:
+      - target/*.jar  
+      
 build:
   stage: build
   script:
