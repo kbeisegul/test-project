@@ -10,7 +10,7 @@ stages:
   - Kuber
 
 Package artifacts:
-  stage: package
+  stage: build
   image: openjdk:17-alpine
   only:
     - release
