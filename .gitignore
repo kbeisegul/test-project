@@ -1,3 +1,12 @@
-.idea
-**/*.iml
-**/target
+# Python
+__pycache__
+*.pyc
+
+# Generated
+/.coverage
+/dist/
+
+# IDE
+/.vscode/*
+!/.vscode/settings.json
+
