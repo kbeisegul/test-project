@@ -12,13 +12,13 @@ stages:
 build:
   stage: build
   image: openjdk:17-alpine
-  only:
-    - release
+  #only:
+   # - release
   script:
     - mvn $MAVEN_OPTS clean package
-  artifacts:
-    paths:
-      - target/*.jar  
+  #artifacts:
+   # paths:
+    #  - target/*.jar  
       
 docker:
   stage: docker
