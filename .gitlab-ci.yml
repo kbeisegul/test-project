@@ -10,7 +10,7 @@ stages:
   - docker
   - Kuber
 
-Package artifacts:
+build:
   stage: build
   image: openjdk:17-alpine
   only:
