@@ -1,8 +1,13 @@
-image: maven:latest
+cache:
+  paths:
+    - ${CI_PROJECT_DIR}/.cache/pip
 
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  APP_NAME: app
+.poetry.template:
+  image: python:3.9
+  variables:
+    PIP_CACHE_DIR: ${CI_PROJECT_DIR}/.cache/pip
+  before_script:
+    - pip install poetry
   
 stages:
   - build
@@ -10,15 +15,14 @@ stages:
   - Kuber
 
 build:
+  extends: .poetry.template
   stage: build
-  #image: openjdk:17-alpine
-  #only:
-   # - release
   script:
-    - mvn $MAVEN_OPTS clean package
-  #artifacts:
-   # paths:
-    #  - target/*.jar  
+    - poetry build
+    
+  artifacts:
+    paths:
+      - "dist/*"
       
 docker:
   stage: docker
