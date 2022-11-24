@@ -1,4 +1,6 @@
-image: maven:latest
+images: 
+  - maven:latest
+  - spring-boot:latest
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
