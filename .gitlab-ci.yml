@@ -21,11 +21,6 @@ Package artifacts:
     paths:
       - target/*.jar  
       
-build:
-  stage: build
-  script:
-  - mvn spring-boot:run
-    
 docker:
   stage: docker
   tags:
