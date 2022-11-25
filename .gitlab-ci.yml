@@ -27,7 +27,7 @@ build:
       
 docker:
   stage: docker
-  when: manual
+  #when: manual
   tags:
     - docker-runner
   before_script:
