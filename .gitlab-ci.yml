@@ -31,7 +31,7 @@ docker:
   tags:
     - docker-runner
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker login -u test-kuat-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
     - docker build -f Dockerfile.build . -t $CONTAINER_TAGGED_IMAGE
     - docker push $CONTAINER_TAGGED_IMAGE
