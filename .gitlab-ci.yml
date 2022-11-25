@@ -11,7 +11,8 @@ variables:
 
 cache:
   paths:
-    - ${CI_PROJECT_DIR}/.cache/pip
+    - .m2/repository/
+    - target/
 
 .poetry.template:
   image: python:3.9
