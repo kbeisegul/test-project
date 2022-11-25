@@ -1,4 +1,10 @@
 image: docker:latest
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  GIT_SSL_NO_VERIFY: "1"
+
 cache:
   paths:
     - ${CI_PROJECT_DIR}/.cache/pip
