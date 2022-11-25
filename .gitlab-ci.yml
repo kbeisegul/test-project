@@ -1,3 +1,4 @@
+image: docker:latest
 cache:
   paths:
     - ${CI_PROJECT_DIR}/.cache/pip
