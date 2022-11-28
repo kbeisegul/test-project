@@ -9,7 +9,8 @@ variables:
 build:
   stage: build
   script:
-    echo "St1"
+    - npm install
+    - npm start
 docker:
   stage: docker
   image: docker:18-git
