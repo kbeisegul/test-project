@@ -27,7 +27,7 @@ docker:
     - docker push $CI_REGISTRY_IMAGE:$VERSION
     - docker push $CI_REGISTRY_IMAGE:latest
 
-kuber:
+deploy_kuber:
   image: docker:latest
   services:
   - docker:dind
