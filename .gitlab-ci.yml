@@ -6,8 +6,8 @@ stages:
 variables:
   VARIABLE_DATA: Gitlab-CI-YAML
 
-build:
-  stage: build
+#build:
+#  stage: build
 
 docker:
   stage: docker
