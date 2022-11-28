@@ -15,5 +15,7 @@ RUN echo "variableData=Dockerfile-Build" >> .env
 # copy in source code
 COPY --chown=node:node ./ ./
 
+RUN echo "Hello World!"
+
 # start express server
 CMD [ "npm", "start" ]
