@@ -1,18 +1,19 @@
-# preparatory actions stage
-FROM python:3.11-slim-buster as builder
+FROM node:14-alpine
 
-LABEL NAME="python-3.8" \
-      VERSION="3.8" \
-      DESC="Python3.8 container"
+# create dir
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+WORKDIR /home/node/app
 
-# Set the working directory inside the Docker image
-WORKDIR /workspace
+# build dependencies
+COPY ./package*.json ./
+USER node
+RUN npm install
 
-# Copy everything except for files listed in .dockerignore
-COPY . /workspace
+# create static configuration for app
+RUN echo "variableData=Dockerfile-Build" >> .env
 
-# Install dependencies
-RUN pip install -r requirements.txt
+# copy in source code
+COPY --chown=node:node ./ ./
 
-# Install the app
-RUN pip install -e .
+# start express server
+CMD [ "npm", "start" ]
