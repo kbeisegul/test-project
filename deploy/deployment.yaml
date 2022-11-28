@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ${CI_PROJECT_NAME}
+  name: ${CI_PROJECT_NAME}
+spec:
+  replicas: ${REPLICAS}
+  selector:
+    matchLabels:
+      app: ${CI_PROJECT_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${CI_PROJECT_NAME}
+      annotations:
+        co.elastic.logs/enabled: "true"
+    spec:
+      containers:
+        - image: ${CONTAINER_TAGGED_IMAGE}
+          imagePullPolicy: Always
+          name: ${CI_PROJECT_NAME}
+          #env:
+          # - name: SPRING_DATASOURCE_URL
+          #   value: ${SPRING_DS_URL}
+          #  - name: SPRING_DATASOURCE_USER
+          #    value: ${SPRING_DS_USER}
+          #  - name: SPRING_DATASOURCE_PASS
+          #    value: ${SPRING_DS_PASS}
+          resources:
+            requests:
+              memory: "500Mi"
+            limits:
+              memory: "1.5Gi"
+      imagePullSecrets:
+        - name: gitlabmega
