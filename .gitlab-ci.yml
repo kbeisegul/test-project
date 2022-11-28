@@ -5,7 +5,7 @@ stages:
 
 variables:
   VARIABLE_DATA: Gitlab-CI-YAML
-
+  ENV: "test"
 build:
   stage: build
   script:
@@ -32,8 +32,7 @@ deploy_kuber:
   services:
   - docker:dind
   stage: kuber
-  variables:
-    ENV: "test"
+    
 .kuber: &kuber
   script:
     - export REGISTRY_BASIC=$(echo -n ${CI_DEPLOY_USER}:${CI_DEPLOY_PASSWORD} | base64)
