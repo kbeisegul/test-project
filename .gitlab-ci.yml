@@ -28,18 +28,45 @@ docker:
     - docker push $CI_REGISTRY_IMAGE:latest
 
 kuber:
+  image: docker:latest
+  services:
+  - docker:dind
   stage: kuber
-#  image: alpine:latest
+  variables:
+    ENV: "test"
+.kuber: &kuber
   script:
-    echo "St3"
-  #  - chmod og= $STAGE_ID_RSA
-   # - apk update && apk add openssh-client
-    # stop existing docker container & remove images
-#    - ssh -i $STAGE_ID_RSA -o StrictHostKeyChecking=no $STAGE_SERVER_USER@$STAGE_SERVER_IP "docker stop $CI_PROJECT_NAME || true"
- #   - ssh -i $STAGE_ID_RSA -o StrictHostKeyChecking=no $STAGE_SERVER_USER@$STAGE_SERVER_IP "docker rm $CI_PROJECT_NAME || true"
-  #  - ssh -i $STAGE_ID_RSA -o StrictHostKeyChecking=no $STAGE_SERVER_USER@$STAGE_SERVER_IP "docker image rm $CI_REGISTRY_IMAGE:latest || true"
-    # pull new container
-   # - ssh -i $STAGE_ID_RSA -o StrictHostKeyChecking=no $STAGE_SERVER_USER@$STAGE_SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
-    #- ssh -i $STAGE_ID_RSA -o StrictHostKeyChecking=no $STAGE_SERVER_USER@$STAGE_SERVER_IP "docker pull $CI_REGISTRY_IMAGE:latest"
-    # run new container
-    #- ssh -i $STAGE_ID_RSA -o StrictHostKeyChecking=no $STAGE_SERVER_USER@$STAGE_SERVER_IP "docker run -d --restart unless-stopped --name $CI_PROJECT_NAME -p 8882:3000 -e "variableData=Docker-Run-Command" $CI_REGISTRY_IMAGE:latest"
+    - export REGISTRY_BASIC=$(echo -n ${CI_DEPLOY_USER}:${CI_DEPLOY_PASSWORD} | base64)
+    - cat ./deploy/namespace.yaml | envsubst | kubectl apply -f -
+    - cat ./deploy/secret.yaml | envsubst | kubectl apply -f -
+    - cat ./deploy/deployment.yaml | envsubst | kubectl apply -f -
+    - cat ./deploy/service.yaml | envsubst | kubectl apply -f -
+
+
+deploy_kuber:
+  image: thisiskj/kubectl-envsubst
+  stage: kuber
+  variables:
+    REPLICAS: 1
+    SERVER: "https://test-kuat-ubuntu:6443"
+    CA_CERT: $CERT_ODA
+    SA_TOKEN: $DEPLOY_SA_TOKEN_ODA
+    DEPLOY_SA_NAME: "gitlab"
+  before_script:
+    - echo "$CA_CERT" > /oda2ca.crt
+    - kubectl config set-cluster k8s --server=$SERVER
+    - kubectl config set clusters.k8s.certificate-authority /oda2ca.crt
+    - kubectl config set-credentials $DEPLOY_SA_NAME --token=$SA_TOKEN
+    - kubectl config set-context $ENV --cluster=k8s --user=$DEPLOY_SA_NAME --namespace=${CI_PROJECT_NAME}-${ENV}
+    - kubectl config use-context $ENV
+    - kubectl config get-contexts
+    - kubectl get nodes -o wide
+  when: manual
+  environment:
+    name: ${ENV}
+  only:
+    - master
+  tags:
+    - prod-runner
+  <<: *kuber
+ 
