@@ -6,9 +6,10 @@ stages:
 variables:
   VARIABLE_DATA: Gitlab-CI-YAML
 
-#build:
-#  stage: build
-
+build:
+  stage: build
+  script:
+    echo "St1"
 docker:
   stage: docker
   image: docker:18-git
@@ -29,7 +30,8 @@ docker:
 kuber:
   stage: kuber
 #  image: alpine:latest
- # script:
+  script:
+    echo "St3"
   #  - chmod og= $STAGE_ID_RSA
    # - apk update && apk add openssh-client
     # stop existing docker container & remove images
