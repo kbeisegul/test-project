@@ -1,3 +1,7 @@
+image: docker:latest
+services:
+  - docker:dind
+
 stages:
   - build
   - docker
@@ -6,10 +10,26 @@ stages:
 variables:
   VARIABLE_DATA: Gitlab-CI-YAML
   ENV: "test"
+
+
+.kuber: &kuber
+  script:
+    - export REGISTRY_BASIC=$(echo -n ${CI_DEPLOY_USER}:${CI_DEPLOY_PASSWORD} | base64)
+    - cat ./deploy/namespace.yaml | envsubst | kubectl apply -f -
+    - cat ./deploy/secret.yaml | envsubst | kubectl apply -f -
+    - cat ./deploy/deployment.yaml | envsubst | kubectl apply -f -
+    - cat ./deploy/service.yaml | envsubst | kubectl apply -f -
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
 build:
   stage: build
   script:
     echo "St1"
+
 docker:
   stage: docker
   image: docker:18-git
@@ -22,21 +42,6 @@ docker:
     - docker build -t $CI_REGISTRY_IMAGE:$VERSION -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:$VERSION
     - docker push $CI_REGISTRY_IMAGE:latest
-
-deploy_kuber:
-  image: docker:latest
-  services:
-  - docker:dind
-  stage: kuber
-    
-.kuber: &kuber
-  script:
-    - export REGISTRY_BASIC=$(echo -n ${CI_DEPLOY_USER}:${CI_DEPLOY_PASSWORD} | base64)
-    - cat ./deploy/namespace.yaml | envsubst | kubectl apply -f -
-    - cat ./deploy/secret.yaml | envsubst | kubectl apply -f -
-    - cat ./deploy/deployment.yaml | envsubst | kubectl apply -f -
-    - cat ./deploy/service.yaml | envsubst | kubectl apply -f -
-
 
 deploy_kuber:
   image: thisiskj/kubectl-envsubst
