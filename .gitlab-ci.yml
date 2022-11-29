@@ -58,6 +58,7 @@ deploy_kuber:
     #- cat /etc/hosts
     #- ping test-kuat-centos
     - echo "$CA_CERT" > /oda2ca.crt
+    - echo oda2ca.crt
     - kubectl config set-cluster k8s --server=$SERVER
     - kubectl config set clusters.k8s.certificate-authority /oda2ca.crt
     - kubectl config set-credentials $DEPLOY_SA_NAME --token=$SA_TOKEN
