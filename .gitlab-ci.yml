@@ -54,7 +54,7 @@ deploy_kuber:
     DEPLOY_SA_NAME: "gitlab"
   before_script:
     - echo "$CA_CERT" > /oda2ca.crt
-    - ping test-kuat-centos
+    - ping test-kuat-centos.magnum.local
     - kubectl config set-cluster k8s --server=$SERVER
     - kubectl config set clusters.k8s.certificate-authority /oda2ca.crt
     - kubectl config set-credentials $DEPLOY_SA_NAME --token=$SA_TOKEN
