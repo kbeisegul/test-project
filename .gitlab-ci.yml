@@ -67,6 +67,6 @@ deploy_kuber:
   only:
     - master
   tags:
-    - prod-runner
+    - docker-runner
   <<: *kuber
  
