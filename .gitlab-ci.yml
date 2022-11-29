@@ -43,7 +43,7 @@ deploy_kuber:
   stage: kuber
   variables:
     REPLICAS: 1
-    SERVER: "https://test-kuat-centos.magnum.local:6443"
+    SERVER: "https://test-kuat-centos:6443"
     CA_CERT: $CERT_ODA
     SA_TOKEN: $DEPLOY_SA_TOKEN_ODA
     DEPLOY_SA_NAME: "gitlab"
