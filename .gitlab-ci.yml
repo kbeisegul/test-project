@@ -62,7 +62,7 @@ deploy_oda2-vip:
   environment:
     name: ${ENV}
   only:
-    - dev
+    - master
   tags:
     - prod-runner
   <<: *kuber
