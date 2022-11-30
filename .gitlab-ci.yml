@@ -15,7 +15,7 @@ variables:
 .kuber: &kuber
   script:
     - export REGISTRY_BASIC=$(echo -n ${CI_DEPLOY_USER}:${CI_DEPLOY_PASSWORD} | base64)
-    - cat ./deploy/namespace.yaml | envsubst | kubectl apply -f -
+    #- cat ./deploy/namespace.yaml | envsubst | kubectl apply -f -
     - cat ./deploy/secret.yaml | envsubst | kubectl apply -f -
     - cat ./deploy/deployment.yaml | envsubst | kubectl apply -f -
     - cat ./deploy/service.yaml | envsubst | kubectl apply -f -
@@ -65,7 +65,6 @@ deploy_kuber:
     - kubectl config set-context $ENV --cluster=k8s --user=$DEPLOY_SA_NAME --namespace=${CI_PROJECT_NAME}-${ENV}
     - kubectl config use-context $ENV
     - kubectl config get-contexts
-    - echo cat ./deploy/namespace.yaml | envsubst | kubectl apply -f -
     #- kubectl get nodes -o wide
   #when: manual
   environment:
