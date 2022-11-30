@@ -56,7 +56,7 @@ deploy_oda2-vip:
     - kubectl config set-credentials $DEPLOY_SA_NAME --token=$SA_TOKEN
     #- kubectl config set-context $ENV --cluster=k8s --user=$DEPLOY_SA_NAME --namespace=${CI_PROJECT_NAME}-${ENV}
     - kubectl config set-context $ENV --cluster=k8s --user=$DEPLOY_SA_NAME --namespace=test 
-    - ping oda2-vip.magnum.local
+    #- ping oda2-vip.magnum.local
     - kubectl config use-context $ENV
     - kubectl config get-contexts
     - kubectl get nodes -o wide
