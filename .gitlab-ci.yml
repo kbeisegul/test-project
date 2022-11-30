@@ -57,7 +57,7 @@ deploy_oda2-vip:
     - kubectl config set-context $ENV --cluster=k8s --user=$DEPLOY_SA_NAME --namespace=${CI_PROJECT_NAME}-${ENV}
     - kubectl config use-context $ENV
     - kubectl config get-contexts
-    #- kubectl get nodes -o wide
+    - kubectl get nodes -o wide
   when: manual
   environment:
     name: ${ENV}
