@@ -22,11 +22,6 @@ variables:
     - cat ./deploy/deployment.yaml | envsubst | kubectl apply -f -
     - cat ./deploy/service.yaml | envsubst | kubectl apply -f -
 
-cache:
-  paths:
-    - .m2/repository/
-    - target/
-
 build:
   stage: build
   script:
@@ -34,7 +29,7 @@ build:
 
 docker:
   stage: docker
-  image: docker:18-git
+  image: docker
   services:
     - docker:18-dind
   script:
