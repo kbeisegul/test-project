@@ -16,6 +16,8 @@ variables:
   script:
     - export REGISTRY_BASIC=$(echo -n ${CI_DEPLOY_USER}:${CI_DEPLOY_PASSWORD} | base64)
     #- cat ./deploy/namespace.yaml | envsubst | kubectl apply -f -
+    - kubectl apply -f ./deploy/namespace.yaml
+    - kubectl get ns
     - cat ./deploy/secret.yaml | envsubst | kubectl apply -f -
     - cat ./deploy/deployment.yaml | envsubst | kubectl apply -f -
     - cat ./deploy/service.yaml | envsubst | kubectl apply -f -
