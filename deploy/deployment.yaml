@@ -33,4 +33,4 @@ spec:
             limits:
               memory: "1.5Gi"
       imagePullSecrets:
-        - name: gitlabmega
+        - name: git

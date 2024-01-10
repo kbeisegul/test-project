@@ -45,7 +45,7 @@ deploy_oda2-vip:
   stage: kuber
   variables:
     REPLICAS: 1
-    SERVER: "https://oda2-vip.magnum.local:6443"
+    SERVER: "https:xxxxx:6443"
     CA_CERT: $CERT_ODA
     SA_TOKEN: $DEPLOY_SA_TOKEN_ODA
     DEPLOY_SA_NAME: "gitlab"
@@ -56,7 +56,6 @@ deploy_oda2-vip:
     - kubectl config set-credentials $DEPLOY_SA_NAME --token=$SA_TOKEN
     #- kubectl config set-context $ENV --cluster=k8s --user=$DEPLOY_SA_NAME --namespace=${CI_PROJECT_NAME}-${ENV}
     - kubectl config set-context $ENV --cluster=k8s --user=$DEPLOY_SA_NAME --namespace=test 
-    #- ping oda2-vip.magnum.local
     - kubectl config use-context $ENV
     - kubectl config get-contexts
     - kubectl get nodes -o wide
@@ -74,16 +73,11 @@ deploy_kuber:
   stage: kuber
   variables:
     REPLICAS: 1
-    SERVER: "https://172.16.8.136:6443"
+    SERVER: "https://xxxx:6443"
     CA_CERT: $CERT_ODA
     SA_TOKEN: $DEPLOY_SA_TOKEN_ODA
     DEPLOY_SA_NAME: "gitlab"
   before_script:
-    - cat /etc/hosts
-    - echo '172.16.8.136 test-kuat-centos.magnum.local test-kuat-centos' >> /etc/hosts
-    - cat /etc/hosts
-    #- ping test-kuat-centos
-    - echo "$CA_CERT" > /oda2ca.crt
     - echo "$CA_CERT"
     - kubectl config set-cluster k8s --server=$SERVER
     - kubectl config set clusters.k8s.certificate-authority /oda2ca.crt
